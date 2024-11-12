@@ -1,0 +1,136 @@
+.services {
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.service-card {
+    background: rgba(5, 5, 5, 0.8);
+    border: 1px solid var(--neon-primary);
+    border-radius: 15px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--neon-secondary);
+    border-radius: 50%;
+    font-size: 2rem;
+    color: var(--neon-secondary);
+    transition: all 0.3s ease;
+}
+
+.service-features {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.service-features li {
+    padding: 0.5rem 0;
+    margin: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 45, 85, 0.2);
+    display: flex;
+    align-items: center;
+}
+
+.service-features li::before {
+    content: '⚡';
+    margin-right: 10px;
+    color: var(--neon-primary);
+}
+
+.service-cta {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 2px solid var(--neon-primary);
+    color: var(--neon-primary);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effects */
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(255, 45, 85, 0.2);
+}
+
+.service-card:hover .service-icon {
+    background: var(--neon-secondary);
+    color: var(--dark-bg);
+    transform: rotate(360deg);
+}
+
+.service-cta:hover {
+    background: var(--neon-primary);
+    color: var(--dark-bg);
+}
+
+/* Pricing Toggle */
+.pricing-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    gap: 1rem;
+}
+
+.toggle-switch {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background: rgba(255, 45, 85, 0.2);
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 26px;
+    height: 26px;
+    background: var(--neon-primary);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.toggle-switch.monthly .toggle-slider {
+    transform: translateX(30px);
+}
+
+/* Price Display */
+.price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--neon-primary);
+    margin: 1rem 0;
+}
+
+.price-period {
+    font-size: 0.9rem;
+    color: var(--neon-secondary);
+}

@@ -1,0 +1,22 @@
+.track-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: var(--neon-primary);
+    width: 0;
+    transition: width 0.1s linear;
+}
+
+.time-display {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.8rem;
+    color: var(--neon-secondary);
+}
+
+.track-item {
+    position: relative;
+    padding-bottom: 30px;
+}

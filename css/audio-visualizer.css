@@ -1,0 +1,125 @@
+.audio-visualizer-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.audio-visualizer-canvas.active {
+    opacity: 1;
+}
+
+/* Enhanced Track Item Styles */
+.track-item {
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.track-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(255, 45, 85, 0.2);
+}
+
+.track-waveform {
+    position: relative;
+    overflow: hidden;
+}
+
+.waveform-animation {
+    background: linear-gradient(
+        90deg,
+        var(--neon-primary),
+        var(--neon-secondary)
+    );
+    mask: repeating-linear-gradient(
+        90deg,
+        #000 0px,
+        #000 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    
+}
+.audio-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+.time-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--neon-secondary);
+    font-size: 0.8rem;
+}
+.progress-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 45, 85, 0.2);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+}
+.progress {
+    position: absolute;
+    height: 100%;
+    background: var(--neon-primary);
+    border-radius: 2px;
+    width: 0;
+}
+.progress-bar:hover .progress {
+    box-shadow: 0 0 10px var(--neon-primary);
+}
+
+.playback-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    color: var(--neon-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.control-btn:hover {
+    color: var(--neon-primary);
+    text-shadow: 0 0 10px var(--neon-primary);
+}
+
+.volume-slider {
+    width: 100px;
+    position: relative;
+}
+.volume-slider input {
+    width: 100%;
+    height: 4px;
+  
+    background: rgba(255, 45, 85, 0.2);
+    border-radius: 2px;
+    outline: none;
+}
+
+.volume-slider input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--neon-primary);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.volume-slider input::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px var(--neon-primary);
+}
