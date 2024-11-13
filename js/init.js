@@ -1,6 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
-    new VisualEffects();
-    new AudioVisualizer();
-    initializeEffects();
-    setupLanguageSwitcher();
+document.addEventListener('DOMContentLoaded', () => {
+    const trails = new VisualEffects();
+    const audioVisualizer = new AudioVisualizer();
+    const portalEffect = new PortalEffect();
+    
+    trails.init();
 });

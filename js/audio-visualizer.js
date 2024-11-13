@@ -1,5 +1,10 @@
 class AudioVisualizer {
     constructor() {
+        document.addEventListener('click', () => {
+            if (this.audioContext && this.audioContext.state === 'suspended') {
+                this.audioContext.resume();
+            }
+        }, { once: true });
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -91,23 +96,25 @@ class AudioVisualizer {
 
     initAudio() {
         document.addEventListener('trackSelected', (e) => {
+            console.log('Track selected:', e.detail);
             const trackData = e.detail;
             
             if (this.currentTrack === trackData.element) {
+                console.log('Same track - toggling play');
                 this.togglePlay(trackData.button);
                 return;
             }
-
+    
+            console.log('New track - setting up audio');
             if (this.currentTrack) {
                 this.currentTrack.querySelector('.play-btn i').classList.replace('fa-pause', 'fa-play');
             }
-
+    
             this.currentTrack = trackData.element;
             this.setupAudioElement(trackData.url);
             this.togglePlay(trackData.button);
         });
     }
-
     setupAudioElement(url) {
         if (this.audioElement) {
             this.audioElement.pause();

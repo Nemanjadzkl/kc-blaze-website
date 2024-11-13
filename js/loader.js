@@ -1,11 +1,9 @@
-// Novi, samostalni fajl za loader
 document.addEventListener('DOMContentLoaded', () => {
     const loader = document.querySelector('.loader');
-    
     setTimeout(() => {
-        loader.classList.add('loader-hidden');
+        loader.style.opacity = '0';
         setTimeout(() => {
-            loader.remove();
+            loader.style.display = 'none';
         }, 500);
     }, 1500);
 });

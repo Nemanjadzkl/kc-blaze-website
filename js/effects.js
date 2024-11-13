@@ -2,6 +2,8 @@
 const trails = 20;
 const trailElements = [];
 
+
+
 for (let i = 0; i < trails; i++) {
     const trail = document.createElement('div');
     trail.className = 'mouse-trail';
