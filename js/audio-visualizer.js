@@ -28,8 +28,10 @@ class AudioVisualizer {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
     }
-
     setupControls() {
+        // Check if controls already exist
+        if (document.querySelector('.audio-controls')) return;
+    
         const controls = document.createElement('div');
         controls.className = 'audio-controls';
         controls.innerHTML = `
@@ -49,10 +51,11 @@ class AudioVisualizer {
                 </div>
             </div>
         `;
-
+    
         document.querySelector('.track-controls').appendChild(controls);
         this.initControlEvents();
     }
+    
 
     initControlEvents() {
         const volumeSlider = document.querySelector('.volume-slider input');
