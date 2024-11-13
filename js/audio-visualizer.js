@@ -34,7 +34,23 @@ class AudioVisualizer {
     
         const controls = document.createElement('div');
         controls.className = 'audio-controls';
-       
+        controls.innerHTML = `
+            <div class="time-control">
+                <span class="current-time">0:00</span>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+                <span class="total-time">0:00</span>
+            </div>
+            <div class="playback-controls">
+                <button class="control-btn volume-btn">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <div class="volume-slider">
+                    <input type="range" min="0" max="1" step="0.1" value="0.7">
+                </div>
+            </div>
+        `;
     
         document.querySelector('.track-controls').appendChild(controls);
         this.initControlEvents();
