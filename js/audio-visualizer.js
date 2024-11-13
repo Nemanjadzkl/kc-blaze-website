@@ -93,19 +93,25 @@ class AudioVisualizer {
     }
 
     initAudio() {
-        document.addEventListener('playAudio', (e) => {
+        document.addEventListener('trackSelected', (e) => {
+            const track = e.detail.element;
             const audioUrl = e.detail.track;
+            
+            if (this.currentTrack === track) {
+                this.togglePlay();
+                return;
+            }
+    
+            if (this.currentTrack) {
+                this.currentTrack.querySelector('.play-btn i').classList.replace('fa-pause', 'fa-play');
+            }
+    
+            this.currentTrack = track;
             if (!this.audioElement || this.audioElement.src !== audioUrl) {
                 this.setupAudioElement(audioUrl);
             }
             this.togglePlay();
-        });
-    
-        document.addEventListener('stopAudio', () => {
-            if (this.audioElement) {
-                this.audioElement.pause();
-                this.canvas.classList.remove('active');
-            }
+            track.querySelector('.play-btn i').classList.replace('fa-play', 'fa-pause');
         });
     }
     
