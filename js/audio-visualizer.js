@@ -1,20 +1,16 @@
 class AudioVisualizer {
-    constructor() {  document.addEventListener('click', () => {
-        if (this.audioContext && this.audioContext.state === 'suspended') {
-            this.audioContext.resume();
-        }
-    }, { once: true });
-
+    constructor() {
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
         this.analyser = this.audioContext.createAnalyser();
         this.gainNode = this.audioContext.createGain();
         this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+        this.currentTrack = null;
         
         this.setupCanvas();
-        this.initAudio();
         this.setupControls();
+        this.initAudio();
     }
 
     setupCanvas() {
@@ -28,10 +24,10 @@ class AudioVisualizer {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
     }
+
     setupControls() {
-        // Check if controls already exist
         if (document.querySelector('.audio-controls')) return;
-    
+
         const controls = document.createElement('div');
         controls.className = 'audio-controls';
         controls.innerHTML = `
@@ -51,11 +47,10 @@ class AudioVisualizer {
                 </div>
             </div>
         `;
-    
+
         document.querySelector('.track-controls').appendChild(controls);
         this.initControlEvents();
     }
-    
 
     initControlEvents() {
         const volumeSlider = document.querySelector('.volume-slider input');
@@ -79,9 +74,11 @@ class AudioVisualizer {
         });
 
         progressBar.addEventListener('click', (e) => {
-            const rect = progressBar.getBoundingClientRect();
-            const percent = (e.clientX - rect.left) / rect.width;
-            this.audioElement.currentTime = this.audioElement.duration * percent;
+            if (this.audioElement) {
+                const rect = progressBar.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                this.audioElement.currentTime = this.audioElement.duration * percent;
+            }
         });
     }
 
@@ -94,29 +91,28 @@ class AudioVisualizer {
 
     initAudio() {
         document.addEventListener('trackSelected', (e) => {
-            const track = e.detail.element;
-            const audioUrl = e.detail.track;
+            const trackData = e.detail;
             
-            if (this.currentTrack === track) {
-                this.togglePlay();
+            if (this.currentTrack === trackData.element) {
+                this.togglePlay(trackData.button);
                 return;
             }
-    
+
             if (this.currentTrack) {
                 this.currentTrack.querySelector('.play-btn i').classList.replace('fa-pause', 'fa-play');
             }
-    
-            this.currentTrack = track;
-            if (!this.audioElement || this.audioElement.src !== audioUrl) {
-                this.setupAudioElement(audioUrl);
-            }
-            this.togglePlay();
-            track.querySelector('.play-btn i').classList.replace('fa-play', 'fa-pause');
+
+            this.currentTrack = trackData.element;
+            this.setupAudioElement(trackData.url);
+            this.togglePlay(trackData.button);
         });
     }
-    
 
     setupAudioElement(url) {
+        if (this.audioElement) {
+            this.audioElement.pause();
+        }
+        
         this.audioElement = new Audio(url);
         const source = this.audioContext.createMediaElementSource(this.audioElement);
         source.connect(this.analyser);
@@ -129,6 +125,18 @@ class AudioVisualizer {
         });
         
         this.animate();
+    }
+
+    togglePlay(button) {
+        if (this.audioElement.paused) {
+            this.audioElement.play();
+            this.canvas.classList.add('active');
+            button.querySelector('i').classList.replace('fa-play', 'fa-pause');
+        } else {
+            this.audioElement.pause();
+            this.canvas.classList.remove('active');
+            button.querySelector('i').classList.replace('fa-pause', 'fa-play');
+        }
     }
 
     updateProgress() {
@@ -144,16 +152,6 @@ class AudioVisualizer {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = Math.floor(seconds % 60);
         return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-    }
-
-    togglePlay() {
-        if (this.audioElement.paused) {
-            this.audioElement.play();
-            this.canvas.classList.add('active');
-        } else {
-            this.audioElement.pause();
-            this.canvas.classList.remove('active');
-        }
     }
 
     animate() {

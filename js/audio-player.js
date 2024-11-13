@@ -9,11 +9,13 @@ class AudioPlayer {
         this.tracks.forEach(track => {
             const playBtn = track.querySelector('.play-btn');
             playBtn.addEventListener('click', () => {
+                const trackData = {
+                    url: track.dataset.track,
+                    element: track,
+                    button: playBtn
+                };
                 document.dispatchEvent(new CustomEvent('trackSelected', { 
-                    detail: { 
-                        track: track.dataset.track,
-                        element: track
-                    }
+                    detail: trackData
                 }));
             });
         });
