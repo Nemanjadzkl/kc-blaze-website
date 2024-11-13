@@ -1,5 +1,10 @@
 class AudioVisualizer {
-    constructor() {
+    constructor() {  document.addEventListener('click', () => {
+        if (this.audioContext && this.audioContext.state === 'suspended') {
+            this.audioContext.resume();
+        }
+    }, { once: true });
+
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
